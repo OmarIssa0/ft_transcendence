@@ -1,48 +1,46 @@
-'use client';
+"use client";
 
-import TButton from "@/component/custom_button";
 import CustomTextField from "@/component/custom_text_field";
-import { useEffect, useRef } from "react";
+import TButton from "@/component/custom_button";
+import CustomAnimation from "@/component/animation";
+import CustomDivider from "@/component/custom_divider";
+import SignInAnther from "@/component/sign_in_anther";
 
-function Login() {
-    const signInButton = useRef<HTMLInputElement | null>(null);
-    useEffect(() => {
-        if (signInButton.current) {
-            signInButton.current.focus();
-        }
-    }, []);
-
-
+export default function Login() {
     return (
-        <div className="grid md:grid-cols-2 grid-cols-1 h-screen">
+        <div className="min-h-screen flex">
+            <CustomAnimation title="Welcome Back" pathAnimation="/game.json" />
 
-            <div className="flex items-center justify-center">
-                <div className="w-[400px]">
-                    <h1 className="text-4xl font-bold mb-8">
-                        Sign in
-                    </h1>
+            <div className="flex-1 lg:w-1/2 flex items-center justify-center p-6">
+                <div className="w-full max-w-sm">
+                    <h1 className="text-3xl font-bold text-text mb-1">Sign in</h1>
+                    <p className="text-text-secondary mb-8 text-sm">
+                        Choose your preferred sign-in method
+                    </p>
+                    <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                        <CustomTextField label="Email" type="email" placeholder="Enter your email" />
+                        <CustomTextField label="Password" type="password" placeholder="Enter your password" />
 
-                    <input
-                        ref={signInButton}
-                        type="email"
-                        placeholder="Email"
-                        className="w-full border-b p-2 mb-6"
-                    />
+                        <div className="flex items-center justify-between">
 
-                    <CustomTextField title="Password" />
+                            <a href="#" className="text-sm text-primary font-medium hover:underline">
+                                Forgot password?
+                            </a>
+                        </div>
 
-                    <TButton title="Sign in" onClick={() => { }} />
+                        <TButton title="Sign in" onClick={() => { }} />
+                    </form>
+
+                    <p className="text-center text-sm text-text-secondary mt-8">
+                        Don&apos;t have an account?{" "}
+                        <a href="/register" className="text-primary font-medium hover:underline">
+                            Register
+                        </a>
+                    </p>
+                    <CustomDivider/>
+                    <SignInAnther />
                 </div>
             </div>
-
-            <div className="flex items-center bg-blue-950 p-6 m-5 rounded-lg hidden md:block justify-center">
-                <h2 className="text-white text-4xl font-bold">
-                    Welcome
-                </h2>
-            </div>
-
         </div>
     );
 }
-
-export default Login;
