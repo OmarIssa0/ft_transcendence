@@ -5,8 +5,35 @@ import TButton from "@/component/custom_button";
 import CustomAnimation from "@/component/animation";
 import CustomDivider from "@/component/custom_divider";
 import SignInAnther from "@/component/sign_in_anther";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { api } from "../network";
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const router = useRouter();
+  const login = async () => {
+    try {
+      if (!email || !password) {
+        return;
+      }
+      setLoading(true);
+      console.log(email, password);
+      await api.post("api/auth/login", {
+        email: email,
+        password: password
+      });
+      router.replace("/home");
+    } catch (error) {
+      console.error("Login failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex">
       <CustomAnimation title="Welcome Back" pathAnimation="/game.json" />
@@ -18,8 +45,20 @@ export default function Login() {
             Choose your preferred sign-in method
           </p>
           <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-            <CustomTextField label="Email" type="email" placeholder="Enter your email" />
-            <CustomTextField label="Password" type="password" placeholder="Enter your password" />
+            <CustomTextField
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <CustomTextField
+              label="Password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
             <div className="flex items-center justify-between">
 
@@ -28,7 +67,7 @@ export default function Login() {
               </a>
             </div>
 
-            <TButton title="Sign in" onClick={() => { }} />
+            <TButton title={loading ? "Logging in..." : "Sign in"} disabled={loading} onClick={login} />
           </form>
 
           <p className="text-center text-sm text-text-secondary mt-8">

@@ -4,6 +4,7 @@ type TButtonProps = {
     className?: string;
     style?: React.CSSProperties;
     onClick?: () => void;
+    disabled?: boolean; 
 };
 
 
