@@ -32,44 +32,45 @@ const navItems = [
     { id: "logout", label: "Logout", icon: LogOut },
 ];
 
-
-
 function Sidebar() {
     const [isCollapsed, setIsCollapsed] = useState(true);
     const pathname = usePathname();
 
     return (
         <aside
-            className={`shrink-0 bg-primary border-r border-navy-800 flex flex-col h-full transition-all duration-300 ${isCollapsed ? "w-20" : "w-64"
+            className={`shrink-0 bg-gradient-to-b from-bg-sidebar via-bg-sidebar to-bg-dark border-r border-border-light flex flex-col h-full transition-all duration-300 ${isCollapsed ? "w-20" : "w-64"
                 }`}
         >
-            <div className="flex items-center justify-between p-5 h-20 border-b border-navy-900">
+            {/* Logo */}
+            <div className="flex items-center justify-between p-5 h-20 border-b border-border">
                 {!isCollapsed && (
                     <div className="flex justify-between w-full items-center">
                         <div className="flex items-center gap-2 animate-fade-in">
-                            <Hexagon className="w-6 h-6 text-electric-400 fill-electric-400/10" />
+                            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-neon-purple flex items-center justify-center">
+                                <Hexagon className="w-5 h-5 text-white" />
+                            </div>
                             <span className="font-bold tracking-wider text-white uppercase text-lg">
-                                Game<span className="text-electric-400">Arena</span>
+                                Game<span className="text-neon-blue">Arena</span>
                             </span>
                         </div>
                         <CircleX
                             size={24}
                             onClick={() => setIsCollapsed(true)}
-                            className="text-slate-400 hover:bg-navy-900 hover:text-slate-200"
+                            className="text-text-secondary hover:bg-surface-alt hover:text-text cursor-pointer rounded-lg p-1 transition-colors"
                         />
                     </div>
                 )}
                 {isCollapsed && (
-                    <Hexagon
-                        className="w-6 h-6 text-electric-400 mx-auto"
-                        onClick={() => setIsCollapsed(false)}
-                    />
+                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-neon-purple flex items-center justify-center mx-auto cursor-pointer" onClick={() => setIsCollapsed(false)}>
+                        <Hexagon className="w-5 h-5 text-white" />
+                    </div>
                 )}
             </div>
 
-            <nav className="flex-1 py-6 px-3 flex flex-col gap-4 overflow-y-auto custom-scrollbar">
+            {/* Navigation */}
+            <nav className="flex-1 py-6 px-3 flex flex-col gap-2 overflow-y-auto custom-scrollbar">
                 {!isCollapsed && (
-                    <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase px-3 mb-2">
+                    <span className="text-[10px] font-bold tracking-widest text-text-secondary uppercase px-3 mb-3">
                         Main Menu
                     </span>
                 )}
@@ -80,21 +81,23 @@ function Sidebar() {
                         <Link
                             href={`/${id}`}
                             key={id}
-                            className={`flex items-center gap-3 p-3 rounded-xl font-medium transition-colors 
-                ${isActive
-                                    ? "bg-slate-800"
-                                    : "text-slate-400 hover:bg-navy-900 hover:text-slate-200"
+                            className={`flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-all duration-200 group
+                                ${isActive
+                                    ? "bg-gradient-to-r from-primary/20 to-neon-purple/10 text-white border border-primary/30"
+                                    : "text-text-secondary hover:bg-surface-alt hover:text-text border border-transparent"
                                 }
-                ${isCollapsed && "justify-center"}`}
+                                ${isCollapsed && "justify-center"}`}
                         >
-                            <Icon size={20} className="shrink-0" />
+                            <div className={`shrink-0 ${isActive ? "text-neon-blue" : "text-text-secondary group-hover:text-text"}`}>
+                                <Icon size={20} />
+                            </div>
 
                             {!isCollapsed && (
                                 <span className="text-sm truncate">{label}</span>
                             )}
 
                             {badge && !isCollapsed && (
-                                <span className="ml-auto bg-electric-500 text-navy-950 text-xs font-bold px-1.5 py-0.5 rounded-md min-w-5 text-center">
+                                <span className="ml-auto bg-gradient-to-r from-neon-blue to-neon-purple text-white text-xs font-bold px-2 py-0.5 rounded-lg min-w-5 text-center">
                                     {badge}
                                 </span>
                             )}
@@ -103,28 +106,29 @@ function Sidebar() {
                 })}
             </nav>
 
-            <div className="p-4 border-t border-navy-900 bg-primary/50 backdrop-blur-sm">
-                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-navy-900/60 transition-all group cursor-pointer">
+            {/* User Profile */}
+            <div className="p-4 border-t border-border bg-bg-sidebar/50 backdrop-blur-sm">
+                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-surface-alt/60 transition-all group cursor-pointer">
                     <div className="relative shrink-0">
                         <img
                             src={currentUser.avatar}
                             alt={currentUser.name}
-                            className="w-10 h-10 rounded-xl object-cover border border-navy-800 group-hover:border-electric-400 transition-colors"
+                            className="w-10 h-10 rounded-xl object-cover border-2 border-border-light group-hover:border-neon-blue transition-colors"
                         />
-                        <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-navy-950" />
+                        <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-neon-green border-2 border-bg-sidebar" />
                     </div>
 
                     {!isCollapsed && (
                         <>
                             <div className="flex-1 min-w-0">
-                                <h4 className="text-sm font-semibold text-slate-200 truncate">
+                                <h4 className="text-sm font-semibold text-text truncate">
                                     {currentUser.name}
                                 </h4>
-                                <p className="text-xs text-electric-400 font-medium">
+                                <p className="text-xs text-neon-blue font-medium">
                                     LVL {currentUser.level}
                                 </p>
                             </div>
-                            <button className="p-1.5 text-slate-500 hover:text-rose-400 rounded-lg hover:bg-rose-500/10 transition-colors">
+                            <button className="p-1.5 text-text-secondary hover:text-error rounded-lg hover:bg-error/10 transition-colors">
                                 <LogOut size={16} />
                             </button>
                         </>

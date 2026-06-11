@@ -35,7 +35,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg">
       <CustomAnimation title="Welcome Back" pathAnimation="/game.json" />
 
       <div className="flex-1 lg:w-1/2 flex items-center justify-center p-6">

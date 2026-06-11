@@ -7,15 +7,12 @@ function CustomDivider({ title }: TCustomDividerProps) {
                 <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-                {title ? (
-                    <span className="bg-white px-4 text-text-secondary">{title}</span>
-                ) : (
-                    <span className="bg-white px-4 text-text-secondary">Or</span>
-                )}
+                <span className="bg-bg-card px-4 text-text-secondary">
+                    {title || "Or"}
+                </span>
             </div>
         </div>
     );
 }
 
 export default CustomDivider;
-
